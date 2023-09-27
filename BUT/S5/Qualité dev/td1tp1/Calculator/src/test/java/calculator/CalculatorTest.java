@@ -1,5 +1,7 @@
 package calculator;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,11 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.assertj.core.api.Assertions;
 
 class CalculatorTest {
+    private Calculator calcul;
+    private int result;
+
+    @BeforeEach
+    void setUp(){
+         calcul = new Calculator();
+         result = 0;
+    }
+
+    @AfterEach
+    void tearDown(){
+        calcul = null;
+        result = 0;
+    }
+
     @Test
     void add_additionne_int_positifs(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 2;
         int opD = 3;
 
@@ -25,8 +40,6 @@ class CalculatorTest {
   @Test
     void add_additionne_int_positif_negatif(){
       // Given
-      Calculator calcul = new Calculator();
-      int result;
       int opG = 2;
       int opD = -3;
 
@@ -40,8 +53,6 @@ class CalculatorTest {
   @Test
     void add_additionne_int_negatifs(){
       // Given
-      Calculator calcul = new Calculator();
-      int result;
       int opG = -2;
       int opD = -3;
 
@@ -55,8 +66,6 @@ class CalculatorTest {
     @Test
     void add_additionne_int_positif_null(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 2;
         int opD = 0;
 
@@ -70,8 +79,6 @@ class CalculatorTest {
     @Test
     void add_additionne_int_nulls(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 0;
         int opD = 0;
 
@@ -85,8 +92,6 @@ class CalculatorTest {
     @Test
     void add_additionne_large_int(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 50000000;
         int opD = 50000000;
 
@@ -100,8 +105,6 @@ class CalculatorTest {
     @Test
     void divide_divise_int_positifs(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 4;
         int opD = 2;
 
@@ -115,8 +118,6 @@ class CalculatorTest {
     @Test
     void divide_divise_int_positif_negatif(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 4;
         int opD = -2;
 
@@ -130,8 +131,6 @@ class CalculatorTest {
     @Test
     void divide_divise_int_negatifs(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = -4;
         int opD = -2;
 
@@ -144,39 +143,40 @@ class CalculatorTest {
 
     @Test
     void divide_divise_int_positif_null(){
-        // Given
-        Calculator calcul = new Calculator();
-        int result;
-        int opG = 4;
-        int opD = 0;
+        try {
+            // Given
+            int opG = 4;
+            int opD = 0;
 
-        //When
-        result = calcul.divide(opG, opD);
-
-        //Then
-        assertThat(result).isEqualTo(null);
+            //When
+            result = calcul.divide(opG, opD);
+        }
+        catch (ArithmeticException e) {
+            //Then
+            assertEquals("Division by zero is not allowed.", e.getMessage());
+        }
     }
 
     @Test
     void divide_divise_int_nulls(){
-        // Given
-        Calculator calcul = new Calculator();
-        int result;
-        int opG = 0;
-        int opD = 0;
+        try {
+            // Given
+            int opG = 0;
+            int opD = 0;
 
-        //When
-        result = calcul.divide(opG, opD);
+            //When
+            result = calcul.divide(opG, opD);
+        }
+        catch (ArithmeticException e){
+            //Then
+            assertEquals("Division by zero is not allowed.", e.getMessage());
+        }
 
-        //Then
-        assertThat(result).isEqualTo(0);
     }
 
     @Test
     void divide_divise_large_int(){
         // Given
-        Calculator calcul = new Calculator();
-        int result;
         int opG = 40000000;
         int opD = 20000000;
 
@@ -186,4 +186,6 @@ class CalculatorTest {
         //Then
         assertThat(result).isEqualTo(2);
     }
+
+
 }
