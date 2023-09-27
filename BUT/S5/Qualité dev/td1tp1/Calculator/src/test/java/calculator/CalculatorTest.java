@@ -3,8 +3,12 @@ package calculator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import org.assertj.core.api.Assertions;
 
@@ -35,6 +39,19 @@ class CalculatorTest {
 
         //Then
         assertThat(result).isEqualTo(5);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0, 1, 1",
+            "1, 2, 3",
+            "-2, 2, 0",
+            "0, 0, 0",
+            "-1, -2, -3"
+    })
+    void test_add(int opG, int opD, int resultatAttendu){
+        result = calcul.add(opD, opG);
+        assertThat(result).isEqualTo(resultatAttendu);
     }
 
   @Test
